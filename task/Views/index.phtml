@@ -1,0 +1,92 @@
+<?php
+    $page = '';
+    if ($this->current_page) {
+        $page = 'page=' . $this->current_page . '&';
+    }
+
+    $sortName = $this->sort['sort_name'];
+    $order_sort = $this->sort['order'] === 'asc' ? 'desc' : 'asc';
+?>
+
+<div class="mb-lg-3">
+Сортировка:
+|
+<?php foreach($this->sortNames as $sort_name => $sort_title): ?>
+    <a href="/?<?php echo $page; ?>sort=<?php echo $sort_name; ?>|<?php echo $order_sort; ?>"><?php echo $sort_title; ?></a> |
+<?php endforeach; ?>
+
+</div>
+
+<?php foreach($this->tasks as $task): ?>
+<?php
+    $task_status = "doing";
+    if ($task['status'] === 1) {
+        $task_status = "done";
+    }
+?>
+<ul class="list-group mb-lg-3">
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-sm">
+                <h6><b>Имя:</b> <?php echo $task['name'] ?></h6>
+            </div>
+            <div class="col-sm right-items">
+                <div class="status <?php echo $task_status; ?>">
+                    <?php echo $task_status; ?>
+                </div>
+                <?php if (isset($this->user)): ?>
+                    <div class="edit-task"><a href="/edit_task?task_id=<?php echo $task['id'] ?>">Edit</a></div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <dd><b>Email:</b> <?php echo $task['email'] ?></dd>
+        <div class="task-body">
+            <div class="task-title mb-lg-1"><b>Задача:</b></div>
+            <div class="task-text">
+                <?php echo $task['task_text'] ?>
+            </div>
+        </div>
+    </li>
+</ul>
+<?php endforeach; ?>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+    <?php for ($i = 1; $i <= $this->pages; $i++): ?>
+        <li class="page-item">
+            <a class="page-link" href="/?page=<?php
+                echo $i;
+                echo ($this->sort) ? '&sort=' . $this->sort['sort_name'] . '|' . $this->sort['order'] : '';
+            ?>">
+                <?php echo $i; ?>
+            </a>
+        </li>
+    <?php endfor; ?>
+    </ul>
+</nav>
+
+<h3 class="mt-lg-5 mb-lg-3">Добавить задачу</h3>
+
+<?php foreach ($this->errors as $error): ?>
+<div class="alert alert-danger" role="alert">
+    <?php echo $error; ?>
+</div>
+<?php endforeach; ?>
+
+<?php if ($this->success): ?>
+<div class="alert alert-success" role="alert">
+    <?php echo $this->success; ?>
+</div>
+<?php endif; ?>
+<form method="post" action="/task_add">
+    <div class="form-group">
+        <input class="form-control" name="user_name" type="text" placeholder="Имя">
+    </div>
+    <div class="form-group">
+        <input class="form-control" name="user_email" type="text" placeholder="E-mail">
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" name="task_text" placeholder="Текст задачи" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Отправить</button>
+</form>

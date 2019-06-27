@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title><?php echo $this->title ?> | Task Manager</title>
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Task Manager</a>
+
+                <?php if (isset($this->user)): ?>
+                    <div class="auth-user">
+                        <div><?php echo $this->user; ?></div>
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </div>
+                <?php else: ?>
+                    <a class="nav-link" href="/login">Авторизация</a>
+                <?php endif; ?>
+            </div>
+        </nav>
+
+        <div class="container pt-lg-3">
+            <h2 class="mb-lg-3"><?php echo $this->title ?></h2>
+            <?php include_once dirname(__DIR__) . '/Views/' . $this->template . '.phtml'; ?>
+        </div>
+
+    </body>
+</html>

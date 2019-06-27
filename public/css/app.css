@@ -1,0 +1,42 @@
+@import "bootstrap.min.css";
+@import "bootstrap-grid.min.css";
+
+body {
+    padding-bottom: 50px;
+}
+
+.auth-user {
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.right-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.status {
+    border-radius: 4px;
+    padding: 2px 5px;
+}
+
+.status.doing {
+    border: 1px solid #c69500;
+    color: #c69500;
+}
+
+.status.done {
+    border: 1px solid #28a745;
+    color: #28a745;
+}
+
+.edit-task {
+    margin-left: 10px;
+}
